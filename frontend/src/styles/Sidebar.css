@@ -1,0 +1,6 @@
+.sidebar-container {
+  height: 100%;
+  width: 12vw;
+  position: fixed;
+  left: 0;
+}
