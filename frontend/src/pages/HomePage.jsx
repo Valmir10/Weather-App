@@ -4,6 +4,7 @@ import WeatherDisplay from "../components/WeatherDisplay";
 import Sidebar from "../components/Sidebar";
 import SearchBar from "../components/SearchBar";
 import { fetchWeatherData } from "../services/weatherApi";
+import CurrentLocationButton from "../components/CurrentLocationButton";
 
 const HomePage = () => {
   const [weatherData, setWeatherData] = useState(null);
@@ -83,19 +84,65 @@ const HomePage = () => {
       setLoading(false);
     }
   };
+    const handleLocationFound = async (lat, lon) => {
+  setLoading(true);
+  setError(null);
+  
+  try {
+    const weather = await fetchWeatherData(lat, lon);
+    
+    if (weather) {
+      const locationData = {
+        city: weather.city || 'Your Location',
+        country: weather.country,
+        temperature: weather.temperature,
+        main: weather.main,
+        description: weather.description,
+        icon: weather.icon,
+        humidity: weather.humidity,
+        windSpeed: weather.windSpeed,
+        uvIndex: weather.uvIndex,
+        isDemoData: weather.isDemoData || false,
+        lastUpdated: new Date().toISOString()
+      };
+      
+      setWeatherData(locationData);
+      
+      const cityExists = favorites.some(
+        (fav) => fav.city.toLowerCase() === locationData.city.toLowerCase()
+      );
 
-  const handleFavoriteClick = (favorite) => {
-    setWeatherData(favorite);
-  };
-
-  const handleRemoveFavorite = (cityName) => {
-    setFavorites((prev) =>
-      prev.filter((fav) => fav.city.toLowerCase() !== cityName.toLowerCase())
-    );
-    if (weatherData && weatherData.city.toLowerCase() === cityName.toLowerCase()) {
-      setWeatherData(null);
+      if (!cityExists) {
+        setFavorites((prev) => [...prev, locationData]);
+      } else {
+        setFavorites((prev) =>
+          prev.map((fav) =>
+            fav.city.toLowerCase() === locationData.city.toLowerCase()
+              ? locationData
+              : fav
+          )
+        );
+      }
     }
-  };
+  } catch (err) {
+    setError('Could not retrieve weather data for your location');
+  } finally {
+    setLoading(false);
+  }
+};
+
+const handleFavoriteClick = (favorite) => {
+  setWeatherData(favorite);
+};
+
+const handleRemoveFavorite = (cityName) => {
+  setFavorites((prev) =>
+    prev.filter((fav) => fav.city.toLowerCase() !== cityName.toLowerCase())
+  );
+  if (weatherData && weatherData.city.toLowerCase() === cityName.toLowerCase()) {
+    setWeatherData(null);
+  }
+};
 
   return (
     <div className="home-page-container">
@@ -106,7 +153,10 @@ const HomePage = () => {
         onRemoveFavorite={handleRemoveFavorite}
         currentCity={weatherData?.city}
       />
-      <SearchBar onSearch={handleSearch} />
+        <div className="search-section">
+          <SearchBar onSearch={handleSearch} />
+          <CurrentLocationButton onLocationFound={handleLocationFound} />
+        </div>
     </div>
   );
 };

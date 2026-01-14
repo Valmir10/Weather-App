@@ -14,6 +14,60 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
+app.get("/api/weather/coordinates", async (req, res) => {
+  console.log("Coordinates endpoint called!");
+  try {
+    const { lat, lon } = req.query;
+
+    if (!lat || !lon) {
+      return res.status(400).json({ error: "Latitude and longitude are required" });
+    }
+
+    if (API_KEY === "demo_key" || !API_KEY) {
+      console.warn("API key missing. Using demo data.");
+      return res.json({
+        ...getDemoWeatherData("Your Location"),
+        city: "Your Location"
+      });
+    }
+
+    const weatherUrl = `${BASE_URL}/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=en`;
+    const weatherResponse = await fetch(weatherUrl);
+
+    if (!weatherResponse.ok) {
+      if (weatherResponse.status === 401) {
+        console.warn("401 Unauthorized - API key is invalid. Using demo data instead.");
+        return res.json({
+          ...getDemoWeatherData("Your Location"),
+          city: "Your Location"
+        });
+      }
+      const errorData = await weatherResponse.json().catch(() => ({}));
+      console.error("API Error:", weatherResponse.status, errorData);
+      return res.status(weatherResponse.status).json({ 
+        error: `Could not fetch weather data (${weatherResponse.status}). Please try again later.` 
+      });
+    }
+
+    const weatherData = await weatherResponse.json();
+
+    let uvIndex = 0;
+    try {
+      uvIndex = await fetchUVIndex(weatherData.coord.lat, weatherData.coord.lon);
+    } catch (uvError) {
+      console.warn("Could not fetch UV index:", uvError);
+      uvIndex = estimateUVIndex(weatherData);
+    }
+
+    const transformedData = transformWeatherData(weatherData, uvIndex);
+    res.json(transformedData);
+  } catch (error) {
+    console.error("Error fetching weather by coordinates:", error);
+    res.status(500).json({ error: "An error occurred while fetching weather data." });
+  }
+});
+
+// ✅ CITYNAME ENDPOINT SEDAN (dynamisk)
 app.get("/api/weather/:cityName", async (req, res) => {
   try {
     const { cityName } = req.params;
