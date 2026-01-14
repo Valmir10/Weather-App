@@ -9,9 +9,7 @@ export const fetchWeatherData = async (cityNameOrLat, lon = null) => {
     } else {
       url = `${BACKEND_URL}/api/weather/${encodeURIComponent(cityNameOrLat)}`;
     }
-    console.log("🔍 Fetching URL:", url);
     const response = await fetch(url);
-     console.log("📡 Response status:", response.status);
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       throw new Error(errorData.error || `Could not fetch weather data (${response.status}). Please try again later.`);

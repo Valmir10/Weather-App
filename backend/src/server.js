@@ -67,7 +67,6 @@ app.get("/api/weather/coordinates", async (req, res) => {
   }
 });
 
-// ✅ CITYNAME ENDPOINT SEDAN (dynamisk)
 app.get("/api/weather/:cityName", async (req, res) => {
   try {
     const { cityName } = req.params;
