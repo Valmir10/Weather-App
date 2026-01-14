@@ -1,5 +1,6 @@
 import React from "react";
 import "../styles/WeatherDisplay.css";
+import "../styles/WeatherDisplayResponsive.css";
 
 import { WiRaindrop, WiStrongWind, WiCloudy } from "react-icons/wi";
 import { IoIosSunny, IoMdCloudy } from "react-icons/io";
@@ -8,7 +9,7 @@ import { BsCloudRain, BsSnow } from "react-icons/bs";
 const WeatherDisplay = ({ weatherData, loading, error }) => {
   const getWeatherIcon = (main, icon) => {
     const iconClass = "weather-icon-img";
-    
+
     switch (main) {
       case "Clear":
         return <IoIosSunny className={iconClass} />;
@@ -71,7 +72,9 @@ const WeatherDisplay = ({ weatherData, loading, error }) => {
     <main className="weather-display-container">
       {weatherData.isDemoData && (
         <div className="demo-data-banner">
-          <p>⚠️ Demo-data visas - API-nyckeln är ogiltig eller inte aktiverad</p>
+          <p>
+            ⚠️ Demo-data visas - API-nyckeln är ogiltig eller inte aktiverad
+          </p>
         </div>
       )}
       <div className="weather-display-wrapper">
