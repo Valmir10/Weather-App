@@ -1,0 +1,250 @@
+.weather-display-container {
+  position: absolute;
+  right: 0%;
+  height: 100%;
+  width: 88%;
+  display: flex;
+  justify-content: center;
+}
+
+.weather-display-wrapper {
+  height: 90%;
+  width: 100%;
+  position: relative;
+}
+
+.information-card-1-container {
+  height: 50%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.information-card-2-container {
+  height: 50%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.information-card-1 {
+  position: relative;
+  height: 400px;
+  width: 450px;
+  display: flex;
+  flex-direction: column;
+  gap: 1%;
+}
+
+.delete-option-menu-container {
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.information-card-2 {
+  height: 150px;
+  width: 450px;
+  display: flex;
+  flex-direction: row;
+}
+
+.information-card-1,
+.information-card-2 {
+  background-color: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  color: #fff;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.information-card-1:hover,
+.information-card-2:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+}
+
+/*card-1*/
+
+.weather-type-image-container {
+  height: 20%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.weather-type-image {
+  height: 100%;
+  width: 45%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.city-name-container {
+  height: 25%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.city-temperature-container {
+  height: 25%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.city-name-container h1,
+.city-temperature-container h1,
+.type-of-weather-container p {
+  font-family: "Roboto", sans-serif;
+  color: white;
+}
+
+.type-of-weather-container {
+  height: 10%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.type-of-weather-container p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 16px;
+}
+
+/*card-2*/
+
+.humidity-container,
+.wind-container,
+.uv-index-container {
+  height: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.humidity-icon-container,
+.wind-icon-container,
+.uv-index-icon-container {
+  height: 50%;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.humidity-icon,
+.wind-icon,
+.uv-index-icon {
+  height: 50px;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+}
+
+.humidity-result-container,
+.wind-result-container,
+.uv-index-result-container {
+  height: 50%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.humudity-result,
+.wind-result,
+.uv-index-result {
+  height: 50%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.humudity-result p,
+.wind-result p,
+.uv-index-result p {
+  font-family: "Roboto", sans-serif;
+  color: white;
+}
+
+.humitidy-text,
+.wind-text,
+.uv-index-text {
+  height: 50%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.humitidy-text p,
+.wind-text p,
+.uv-index-text p {
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.humidity-icon-img,
+.wind-icon-img,
+.uv-index-icon-img {
+  height: 35px;
+  width: 35px;
+  color: white;
+}
+
+.weather-icon-img {
+  height: 60px;
+  width: 60px;
+  color: yellow;
+}
+
+.hamburger-menu-container {
+  position: absolute;
+  left: 15px;
+  bottom: 15px;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hamburger-menu-icon {
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  color: white;
+  display: none;
+}
+
+.keyboard-wrapper {
+  display: none;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  width: 100%;
+  background: #222;
+  z-index: 999;
+  overflow: hidden;
+  width: 100%;
+}
