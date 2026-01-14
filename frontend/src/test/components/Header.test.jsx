@@ -3,5 +3,5 @@ import Header from "../../components/Header";
 
 test("renders Header component", () => {
   render(<Header />);
-  expect(screen.getByText(/header/i)).toBeInTheDocument();
+  expect(screen.getByText(/favorites/i)).toBeInTheDocument();
 });
