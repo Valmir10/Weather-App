@@ -6,6 +6,8 @@ En väderapplikation byggd med React och Vite och som använder Vercel för att 
 
 - Sök efter väderdata för olika städer
 - Visa temperatur, luftfuktighet, vindhastighet och UV-index
+- Hämta väder för din aktuella position
+- Spara favoritstäder
 - Modern och responsiv design
 - Integrerad med OpenWeatherMap API
 
