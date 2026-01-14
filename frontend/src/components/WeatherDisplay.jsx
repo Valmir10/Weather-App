@@ -1,31 +1,98 @@
 import React from "react";
 import "../styles/WeatherDisplay.css";
 
-import { WiRaindrop, WiStrongWind } from "react-icons/wi";
-import { IoIosSunny } from "react-icons/io";
+import { WiRaindrop, WiStrongWind, WiCloudy } from "react-icons/wi";
+import { IoIosSunny, IoMdCloudy } from "react-icons/io";
+import { BsCloudRain, BsSnow } from "react-icons/bs";
 
-const WeatherDisplay = () => {
+const WeatherDisplay = ({ weatherData, loading, error }) => {
+  const getWeatherIcon = (main, icon) => {
+    const iconClass = "weather-icon-img";
+    
+    switch (main) {
+      case "Clear":
+        return <IoIosSunny className={iconClass} />;
+      case "Clouds":
+        return <WiCloudy className={iconClass} />;
+      case "Rain":
+      case "Drizzle":
+        return <BsCloudRain className={iconClass} />;
+      case "Snow":
+        return <BsSnow className={iconClass} />;
+      case "Thunderstorm":
+        return <BsCloudRain className={iconClass} />;
+      default:
+        return <IoMdCloudy className={iconClass} />;
+    }
+  };
+
+  const capitalizeFirst = (str) => {
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
+  if (loading) {
+    return (
+      <main className="weather-display-container">
+        <div className="weather-display-wrapper">
+          <div className="loading-container">
+            <p>Laddar väderdata...</p>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className="weather-display-container">
+        <div className="weather-display-wrapper">
+          <div className="error-container">
+            <p>{error}</p>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
+  if (!weatherData) {
+    return (
+      <main className="weather-display-container">
+        <div className="weather-display-wrapper">
+          <div className="no-data-container">
+            <p>Sök efter en stad för att se väderdata</p>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="weather-display-container">
+      {weatherData.isDemoData && (
+        <div className="demo-data-banner">
+          <p>⚠️ Demo-data visas - API-nyckeln är ogiltig eller inte aktiverad</p>
+        </div>
+      )}
       <div className="weather-display-wrapper">
         <div className="information-card-1-container">
           <div className="information-card-1">
             <div className="city-name-container">
-              <h1>Lund</h1>
+              <h1>{weatherData.city}</h1>
             </div>
 
             <div className="weather-type-image-container">
               <div className="weather-type-image">
-                <IoIosSunny className="weather-icon-img" />
+                {getWeatherIcon(weatherData.main, weatherData.icon)}
               </div>
             </div>
 
             <div className="city-temperature-container">
-              <h1>-5°</h1>
+              <h1>{weatherData.temperature}°</h1>
             </div>
 
             <div className="type-of-weather-container">
-              <p>Sunny</p>
+              <p>{capitalizeFirst(weatherData.description)}</p>
             </div>
           </div>
         </div>
@@ -40,7 +107,7 @@ const WeatherDisplay = () => {
               </div>
               <div className="humidity-result-container">
                 <div className="humudity-result">
-                  <p>68%</p>
+                  <p>{weatherData.humidity}%</p>
                 </div>
                 <div className="humitidy-text">
                   <p>Humidity</p>
@@ -56,7 +123,7 @@ const WeatherDisplay = () => {
               </div>
               <div className="wind-result-container">
                 <div className="wind-result">
-                  <p>19.8 km/h</p>
+                  <p>{weatherData.windSpeed} km/h</p>
                 </div>
                 <div className="wind-text">
                   <p>Wind</p>
@@ -72,7 +139,7 @@ const WeatherDisplay = () => {
               </div>
               <div className="uv-index-result-container">
                 <div className="uv-index-result">
-                  <p>0</p>
+                  <p>{weatherData.uvIndex}</p>
                 </div>
                 <div className="uv-index-text">
                   <p>UV-index</p>

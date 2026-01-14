@@ -3,4 +3,15 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.header-container h1 {
+  font-family: "Roboto", sans-serif;
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0;
+  text-align: center;
 }
