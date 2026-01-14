@@ -26,7 +26,7 @@ const Sidebar = ({ favorites, onFavoriteClick, onRemoveFavorite, currentCity }) 
         <h1 className="sidebar-title">Favorites</h1>
         <div className="favorites-list">
           {favorites.length === 0 ? (
-            <p className="no-favorites">Inga favoriter ännu. Sök efter en stad för att lägga till den.</p>
+            <p className="no-favorites">No favorites yet. Search for a city to add it.</p>
           ) : (
             favorites.map((favorite, index) => {
               const isActive = currentCity?.toLowerCase() === favorite.city?.toLowerCase();
@@ -44,7 +44,7 @@ const Sidebar = ({ favorites, onFavoriteClick, onRemoveFavorite, currentCity }) 
                         e.stopPropagation();
                         onRemoveFavorite(favorite.city);
                       }}
-                      aria-label="Ta bort favorit"
+                      aria-label="Remove favorite"
                     >
                       <FaTimes />
                     </button>

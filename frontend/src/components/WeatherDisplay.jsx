@@ -1,6 +1,5 @@
 import React from "react";
 import "../styles/WeatherDisplay.css";
-import "../styles/WeatherDisplayResponsive.css";
 
 import { WiRaindrop, WiStrongWind, WiCloudy } from "react-icons/wi";
 import { IoIosSunny, IoMdCloudy } from "react-icons/io";
@@ -9,7 +8,7 @@ import { BsCloudRain, BsSnow } from "react-icons/bs";
 const WeatherDisplay = ({ weatherData, loading, error }) => {
   const getWeatherIcon = (main, icon) => {
     const iconClass = "weather-icon-img";
-
+    
     switch (main) {
       case "Clear":
         return <IoIosSunny className={iconClass} />;
@@ -37,7 +36,7 @@ const WeatherDisplay = ({ weatherData, loading, error }) => {
       <main className="weather-display-container">
         <div className="weather-display-wrapper">
           <div className="loading-container">
-            <p>Laddar väderdata...</p>
+            <p>Loading weather data...</p>
           </div>
         </div>
       </main>
@@ -61,7 +60,7 @@ const WeatherDisplay = ({ weatherData, loading, error }) => {
       <main className="weather-display-container">
         <div className="weather-display-wrapper">
           <div className="no-data-container">
-            <p>Sök efter en stad för att se väderdata</p>
+            <p>Search for a city to see weather data</p>
           </div>
         </div>
       </main>
@@ -72,9 +71,7 @@ const WeatherDisplay = ({ weatherData, loading, error }) => {
     <main className="weather-display-container">
       {weatherData.isDemoData && (
         <div className="demo-data-banner">
-          <p>
-            ⚠️ Demo-data visas - API-nyckeln är ogiltig eller inte aktiverad
-          </p>
+          <p>⚠️ Demo data displayed - API key is invalid or not activated</p>
         </div>
       )}
       <div className="weather-display-wrapper">

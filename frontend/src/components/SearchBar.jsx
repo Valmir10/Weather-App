@@ -25,13 +25,13 @@ const SearchBar = ({ onSearch }) => {
           <input
             type="text"
             className="searchbar-input"
-            placeholder="Sök stad..."
+            placeholder="Search city..."
             value={searchQuery}
             onChange={handleChange}
           />
         </div>
         <button type="submit" className="searchbar-button">
-          Sök
+          Search
         </button>
       </form>
     </div>
@@ -39,4 +39,3 @@ const SearchBar = ({ onSearch }) => {
 };
 
 export default SearchBar;
-

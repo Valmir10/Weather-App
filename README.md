@@ -1,6 +1,6 @@
 # Weather App
 
-En väderapplikation byggd med React och Vite som visar väderdata för olika städer.
+En väderapplikation byggd med React och Vite och som använder Vercel för att deploya projectet. Den visar väderdata för olika städer.
 
 ## Funktioner
 
@@ -29,14 +29,14 @@ npm install
 
 För att använda riktig väderdata behöver du en API-nyckel från OpenWeatherMap:
 
-1. Skapa ett gratis konto på [OpenWeatherMap](https://openweathermap.org/api)
-2. Hämta din API-nyckel från kontot
-3. Skapa en `.env`-fil i `frontend/`-mappen:
+1. Skapa en fil som heter .env i backend/-mappen med detta innehåll: WEATHER_API_KEY=6802549fb7737b629d4647b7afd9ac03
+PORT=4000
+2.
    ```
-   VITE_WEATHER_API_KEY=din_api_nyckel_här
-   ```
-
-**Obs:** Om ingen API-nyckel anges kommer appen att använda demo-data.
+**Obs:** 
+- API-nyckeln hanteras säkert i backend och exponeras aldrig till frontend
+- Om ingen API-nyckel anges kommer appen att använda demo-data automatiskt
+- Projektet fungerar direkt när någon klonar det, även utan API-nyckel (med demo-data)
 
 ## Starta applikationen
 

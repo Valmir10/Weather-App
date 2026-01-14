@@ -11,14 +11,12 @@ const HomePage = () => {
   const [error, setError] = useState(null);
   const [favorites, setFavorites] = useState([]);
 
-  // Ladda favorites från localStorage vid mount
   useEffect(() => {
     const savedFavorites = localStorage.getItem("weatherFavorites");
     if (savedFavorites) {
       try {
         const parsed = JSON.parse(savedFavorites);
         setFavorites(parsed);
-        // Uppdatera väderdata för alla favorites
         updateFavoritesWeather(parsed);
       } catch (err) {
         console.error("Error loading favorites:", err);
@@ -26,7 +24,6 @@ const HomePage = () => {
     }
   }, []);
 
-  // Spara favorites till localStorage när de ändras
   useEffect(() => {
     if (favorites.length > 0) {
       localStorage.setItem("weatherFavorites", JSON.stringify(favorites));
@@ -45,7 +42,7 @@ const HomePage = () => {
           };
         } catch (err) {
           console.error(`Error updating weather for ${favorite.city}:`, err);
-          return favorite; // Behåll gamla data om uppdatering misslyckas
+          return favorite;
         }
       })
     );
@@ -60,7 +57,6 @@ const HomePage = () => {
       const data = await fetchWeatherData(cityName);
       setWeatherData(data);
 
-      // Lägg till i favorites om den inte redan finns
       const cityExists = favorites.some(
         (fav) => fav.city.toLowerCase() === cityName.toLowerCase()
       );
@@ -72,7 +68,6 @@ const HomePage = () => {
         };
         setFavorites((prev) => [...prev, newFavorite]);
       } else {
-        // Uppdatera befintlig favorit
         setFavorites((prev) =>
           prev.map((fav) =>
             fav.city.toLowerCase() === cityName.toLowerCase()
@@ -82,7 +77,7 @@ const HomePage = () => {
         );
       }
     } catch (err) {
-      setError(err.message || "Ett fel uppstod vid hämtning av väderdata.");
+      setError(err.message || "An error occurred while fetching weather data.");
       setWeatherData(null);
     } finally {
       setLoading(false);
@@ -97,7 +92,6 @@ const HomePage = () => {
     setFavorites((prev) =>
       prev.filter((fav) => fav.city.toLowerCase() !== cityName.toLowerCase())
     );
-    // Om den borttagna favoriten är den som visas, rensa weatherData
     if (weatherData && weatherData.city.toLowerCase() === cityName.toLowerCase()) {
       setWeatherData(null);
     }
