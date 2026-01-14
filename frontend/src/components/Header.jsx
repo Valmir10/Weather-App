@@ -4,7 +4,7 @@ import "../styles/Header.css";
 const Header = () => {
   return (
     <header className="header-container">
-      <h1>Header</h1>
+      <h1>Favorites</h1>
     </header>
   );
 };

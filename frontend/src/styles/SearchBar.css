@@ -1,0 +1,84 @@
+.searchbar-container {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: auto;
+  width: 12vw;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 100;
+}
+
+.searchbar-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.searchbar-input-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 16px;
+  z-index: 1;
+}
+
+.searchbar-input {
+  width: 100%;
+  padding: 12px 12px 12px 40px;
+  background-color: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  color: white;
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.searchbar-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.searchbar-input:focus {
+  background-color: rgba(255, 255, 255, 0.35);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.searchbar-button {
+  width: 100%;
+  padding: 12px;
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  color: white;
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.searchbar-button:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.searchbar-button:active {
+  transform: translateY(0);
+}
+
