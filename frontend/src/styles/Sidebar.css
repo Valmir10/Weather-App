@@ -1,0 +1,159 @@
+.sidebar-container {
+  height: 100%;
+  width: 20vw;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(74, 144, 226, 0.9) 0%,
+    rgba(107, 95, 191, 0.9) 50%,
+    rgba(138, 43, 226, 0.9) 100%
+  );
+  backdrop-filter: blur(10px);
+  overflow-y: auto;
+  z-index: 50;
+}
+
+.sidebar-content {
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-title {
+  font-family: "Roboto", sans-serif;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 0 20px 0;
+  text-align: center;
+}
+
+.favorites-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.no-favorites {
+  font-family: "Roboto", sans-serif;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+}
+
+.favorite-item {
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.favorite-item:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  transform: translateX(5px);
+}
+
+.favorite-item.active {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.favorite-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.favorite-city {
+  font-family: "Roboto", sans-serif;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  flex: 1;
+}
+
+.remove-favorite-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.remove-favorite-btn:hover {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.favorite-weather {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.favorite-description {
+  font-family: "Roboto", sans-serif;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  margin: 0;
+}
+
+.favorite-right-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.favorite-temperature {
+  font-family: "Roboto", sans-serif;
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.favorite-date {
+  font-family: "Roboto", sans-serif;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+  margin: 0;
+}
+
+/* Scrollbar styling */
+.sidebar-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.sidebar-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.sidebar-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
