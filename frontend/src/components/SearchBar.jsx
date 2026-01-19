@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import "../styles/SearchBar.css";
 import { FaSearch } from "react-icons/fa";
 
-const SearchBar = ({ onSearch }) => {
-  const [searchQuery, setSearchQuery] = useState("");
-
+const SearchBar = ({ onSearch, searchQuery, setSearchQuery }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {

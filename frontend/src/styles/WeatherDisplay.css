@@ -1,20 +1,21 @@
 .weather-display-container {
-  position: absolute;
-  right: 12vw;
-  height: 100%;
-  width: calc(88% - 12vw);
+  position: relative;
+  height: 100svh;
+  width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .weather-display-wrapper {
-  height: 100%;
-  width: 100%;
-  position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-top: 80px;
+  gap: 24px;
+  width: 100%;
+  max-width: 900px;
+  transform: translateX(4vw);
 }
 
 .information-card-1-container,
@@ -33,25 +34,6 @@
 .information-card-2-container {
   padding-top: 12px;
 }
-/* Cards */
-.information-card-1 {
-  position: relative;
-  height: 400px;
-  width: min(90%, 450px);
-  display: flex;
-  flex-direction: column;
-  gap: 1%;
-}
-
-.information-card-2 {
-  min-height: 170px;
-  width: min(90%, 450px);
-  display: flex;
-  flex-direction: row;
-  padding: 20px 0;
-  box-sizing: border-box;
-}
-
 
 .information-card-1,
 .information-card-2 {
@@ -69,7 +51,6 @@
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
 }
 
-/* Delete menu */
 .delete-option-menu-container {
   height: 30px;
   width: 30px;
@@ -79,7 +60,6 @@
   cursor: pointer;
 }
 
-/* Card 1 content */
 .weather-type-image-container,
 .city-name-container,
 .city-temperature-container,
@@ -123,7 +103,6 @@
   font-size: 16px;
 }
 
-/* Card 2 */
 .humidity-container,
 .wind-container,
 .uv-index-container {
@@ -205,7 +184,6 @@
   color: yellow;
 }
 
-/* Hamburger */
 .hamburger-menu-container {
   position: absolute;
   left: 15px;
@@ -225,7 +203,6 @@
   display: none;
 }
 
-/* Keyboard */
 .keyboard-wrapper {
   display: none;
   position: fixed;
@@ -297,5 +274,103 @@
   to {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
+  }
+}
+
+@media (max-width: 1024px) {
+  .weather-display-wrapper {
+    transform: translateX(0);
+    gap: 20px;
+  }
+
+  .information-card-1 {
+    height: 350px;
+    width: min(90%, 400px);
+  }
+
+  .information-card-2 {
+    flex-direction: column;
+    min-height: 160px;
+    width: min(90%, 400px);
+  }
+
+  .humidity-icon,
+  .wind-icon,
+  .uv-index-icon {
+    height: 45px;
+    width: 45px;
+  }
+
+  .weather-icon-img {
+    height: 50px;
+    width: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .information-card-1 {
+    height: 300px;
+    width: 95%;
+  }
+
+  .information-card-2 {
+    width: 95%;
+  }
+
+  .humidity-icon,
+  .wind-icon,
+  .uv-index-icon {
+    height: 40px;
+    width: 40px;
+  }
+
+  .weather-icon-img {
+    height: 45px;
+    width: 45px;
+  }
+
+  .type-of-weather-container p {
+    font-size: 14px;
+  }
+
+  .humitidy-text p,
+  .wind-text p,
+  .uv-index-text p {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .information-card-1 {
+    height: 250px;
+    width: 95%;
+  }
+
+  .information-card-2 {
+    width: 95%;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .humidity-icon,
+  .wind-icon,
+  .uv-index-icon {
+    height: 35px;
+    width: 35px;
+  }
+
+  .weather-icon-img {
+    height: 40px;
+    width: 40px;
+  }
+
+  .type-of-weather-container p {
+    font-size: 12px;
+  }
+
+  .humitidy-text p,
+  .wind-text p,
+  .uv-index-text p {
+    font-size: 12px;
   }
 }

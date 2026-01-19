@@ -41,3 +41,20 @@
 .location-icon {
   font-size: 14px;
 }
+
+@media (max-width: 768px) {
+  .current-location-button {
+    top: auto;                
+    bottom: 80px;            
+    right: 50%;               
+    transform: translateX(50%); 
+    width: 60%;               
+    font-size: 16px;          
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .location-icon {
+    font-size: 16px;
+  }
+}

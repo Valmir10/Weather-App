@@ -2,12 +2,126 @@
   min-height: 100svh;
   width: 100%;
   display: flex;
+  flex-direction: row;
+  background: linear-gradient(to bottom, #4a90e2 0%, #6b5fbf 50%, #8a2be2 100%);
+}
+
+.search-section {
+  display: flex;
   flex-direction: column;
-  background: linear-gradient(
-    to bottom,
-    
-    #4a90e2 0%,
-    #6b5fbf 50%,
-    #8a2be2 100%
-  );
+  gap: 10px;
+  margin: 20px;
+  flex: 1;
+}
+
+.weather-display {
+  flex: 2;
+  margin: 20px;
+}
+
+.sidebar {
+  width: 250px;
+  padding: 20px;
+  background: rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mobile-keyboard {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .home-page-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    order: 2;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px;
+    gap: 5px;
+  }
+
+  .search-section {
+    order: 1;
+    margin: 10px;
+  }
+
+  .weather-display {
+    order: 0;
+    margin: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .search-section {
+    margin: 5px;
+  }
+
+  .weather-display {
+    margin: 5px;
+  }
+
+  .sidebar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  .mobile-keyboard {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #111;
+    padding: 10px 0;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+
+  .keyboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .keyboard-row {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  .keyboard-key {
+    flex: 1;
+    max-width: 50px;
+    padding: 12px 8px;
+    background: #333;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+
+  .keyboard-key:hover {
+    background: #555;
+  }
+}
+
+@media (max-width: 480px) {
+  .keyboard-key {
+    max-width: 40px;
+    padding: 10px 6px;
+    font-size: 0.9rem;
+  }
 }
