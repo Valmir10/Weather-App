@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../styles/HomePage.css";
 import WeatherDisplay from "../components/WeatherDisplay";
 import Sidebar from "../components/Sidebar";
@@ -13,6 +13,10 @@ const HomePage = () => {
   const [error, setError] = useState(null);
   const [favorites, setFavorites] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
+  const searchRef = useRef(null);
+  const keyboardRef = useRef(null);
 
   // Load favorites from localStorage
   useEffect(() => {
@@ -28,24 +32,18 @@ const HomePage = () => {
     }
   }, []);
 
-  // Save favorites whenever they change
   useEffect(() => {
     if (favorites.length > 0) {
       localStorage.setItem("weatherFavorites", JSON.stringify(favorites));
     }
   }, [favorites]);
 
-  // Update all favorites with fresh weather data
   const updateFavoritesWeather = async (favoritesList) => {
     const updatedFavorites = await Promise.all(
       favoritesList.map(async (favorite) => {
         try {
           const data = await fetchWeatherData(favorite.city);
-          return {
-            ...favorite,
-            ...data,
-            lastUpdated: new Date().toISOString(),
-          };
+          return { ...favorite, ...data, lastUpdated: new Date().toISOString() };
         } catch (err) {
           console.error(`Error updating weather for ${favorite.city}:`, err);
           return favorite;
@@ -55,7 +53,6 @@ const HomePage = () => {
     setFavorites(updatedFavorites);
   };
 
-  // Search for weather data by city
   const handleSearch = async (cityName) => {
     setLoading(true);
     setError(null);
@@ -69,11 +66,7 @@ const HomePage = () => {
       );
 
       if (!cityExists) {
-        const newFavorite = {
-          ...data,
-          lastUpdated: new Date().toISOString(),
-        };
-        setFavorites((prev) => [...prev, newFavorite]);
+        setFavorites((prev) => [...prev, { ...data, lastUpdated: new Date().toISOString() }]);
       } else {
         setFavorites((prev) =>
           prev.map((fav) =>
@@ -88,10 +81,10 @@ const HomePage = () => {
       setWeatherData(null);
     } finally {
       setLoading(false);
+      setKeyboardVisible(false);
     }
   };
 
-  // Search by user's current location
   const handleLocationFound = async (lat, lon) => {
     setLoading(true);
     setError(null);
@@ -151,9 +144,6 @@ const HomePage = () => {
     }
   };
 
-  
-
-  // Keyboard input handler kopplad till SearchBar och Weather API
   const handleKeyPress = (key) => {
     if (key === "SPACE") {
       setSearchQuery((prev) => prev + " ");
@@ -169,6 +159,22 @@ const HomePage = () => {
     }
   };
 
+  // Stänger keyboard om man klickar utanför
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(e.target) &&
+        keyboardRef.current &&
+        !keyboardRef.current.contains(e.target)
+      ) {
+        setKeyboardVisible(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <div className="home-page-container">
       <WeatherDisplay weatherData={weatherData} loading={loading} error={error} />
@@ -178,17 +184,17 @@ const HomePage = () => {
         onRemoveFavorite={handleRemoveFavorite}
         currentCity={weatherData?.city}
       />
-      <div className="search-section">
+      <div className="search-section" ref={searchRef}>
         <SearchBar
           onSearch={handleSearch}
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
+          onFocus={() => setKeyboardVisible(true)}
         />
         <CurrentLocationButton onLocationFound={handleLocationFound} />
       </div>
 
-      {/* Mobil Keyboard overlay */}
-      <div className="mobile-keyboard">
+      <div className={`keyboard-container ${keyboardVisible ? "active" : ""}`} ref={keyboardRef}>
         <Keyboard onKeyPress={handleKeyPress} />
       </div>
     </div>
