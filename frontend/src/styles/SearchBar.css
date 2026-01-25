@@ -82,3 +82,57 @@
   transform: translateY(0);
 }
 
+@media (max-width: 1024px) {
+  .searchbar-container {
+    width: 30vw;
+    padding: 15px;
+  }
+
+  .searchbar-input {
+    font-size: 13px;
+    padding: 10px 10px 10px 36px;
+  }
+
+  .searchbar-button {
+    font-size: 13px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .searchbar-container {
+    width: 80%;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px;
+    z-index: 1001;
+  }
+
+  .searchbar-input {
+    font-size: 16px;
+    padding: 14px 14px 14px 44px;
+  }
+
+  .searchbar-button {
+    font-size: 16px;
+    padding: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .searchbar-container {
+    width: 90%;
+    padding: 10px;
+  }
+
+  .searchbar-input {
+    font-size: 14px;
+    padding: 12px 12px 12px 40px;
+  }
+
+  .searchbar-button {
+    font-size: 14px;
+    padding: 12px;
+  }
+}

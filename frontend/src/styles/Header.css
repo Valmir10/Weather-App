@@ -1,5 +1,6 @@
 .header-container {
-  height: 10%;
+  height: 64px;
+  min-height: 64px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -14,4 +15,21 @@
   font-weight: bold;
   margin: 0;
   text-align: center;
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    height: 50px;
+    min-height: 50px;
+  }
+
+  .header-container h1 {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-container h1 {
+    font-size: 18px;
+  }
 }
