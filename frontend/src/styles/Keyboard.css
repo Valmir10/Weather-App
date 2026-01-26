@@ -1,57 +1,55 @@
 .keyboard-container {
-  display: none;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: #1f1f1f;
+  padding: 24px 10px 20px; 
+  z-index: 999;
+
+  transform: translateY(100%);
+  transition: transform 0.25s ease;
+  pointer-events: none; 
+  opacity: 0;
 }
 
 .keyboard-container.active {
-  display: flex;
+  transform: translateY(0);
+  pointer-events: auto; 
+  opacity: 1;
 }
 
-@media (max-width: 768px) {
-  .keyboard-container {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(75, 33, 160, 0.95); 
-    padding: 16px;
-    border-top: 2px solid rgba(255, 255, 255, 0.2);
-    flex-direction: column;
-    gap: 10px;
-    z-index: 999;
-    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px); 
-  }
 
-  .keyboard-row {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-  }
+.keyboard-wrapper {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
 
-  .keyboard-key {
-    flex: 1;
-    max-width: 70px;      
-    min-width: 50px;      
-    padding: 16px 0;      
-    font-size: 1.2rem;    
-    border-radius: 14px;  
-    border: none;
-    background: rgba(255, 255, 255, 0.15); 
-    color: white;
-    font-family: "Roboto", sans-serif;
-    font-weight: 500;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-  .keyboard-key:hover {
-    background: rgba(255, 255, 255, 0.25);
-  }
 
-  .keyboard-key:active {
-    transform: scale(0.95);
-    background: rgba(255, 255, 255, 0.35);
-  }
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.keyboard-row {
+  display: flex;
+  gap: 8px;
+}
+
+
+.key {
+  flex: 1;
+  height: 55px;   
+  border: none;
+  border-radius: 10px;
+  background: #2e2e2e;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
 }

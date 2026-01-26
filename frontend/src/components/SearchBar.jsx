@@ -2,17 +2,19 @@ import React from "react";
 import "../styles/SearchBar.css";
 import { FaSearch } from "react-icons/fa";
 
-const SearchBar = ({ onSearch, searchQuery, setSearchQuery }) => {
+const SearchBar = ({
+  onSearch,
+  searchQuery,
+  setSearchQuery,
+  onFocus,
+}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      onSearch(searchQuery.trim());
-      setSearchQuery("");
-    }
-  };
 
-  const handleChange = (e) => {
-    setSearchQuery(e.target.value);
+    if (!searchQuery.trim()) return;
+
+    onSearch(searchQuery.trim());
+    setSearchQuery("");
   };
 
   return (
@@ -20,14 +22,17 @@ const SearchBar = ({ onSearch, searchQuery, setSearchQuery }) => {
       <form onSubmit={handleSubmit} className="searchbar-form">
         <div className="searchbar-input-wrapper">
           <FaSearch className="search-icon" />
+
           <input
             type="text"
             className="searchbar-input"
             placeholder="Search city..."
             value={searchQuery}
-            onChange={handleChange}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onFocus={onFocus}
           />
         </div>
+
         <button type="submit" className="searchbar-button">
           Search
         </button>
