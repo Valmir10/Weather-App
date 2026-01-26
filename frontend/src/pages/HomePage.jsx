@@ -12,13 +12,17 @@ const HomePage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [favorites, setFavorites] = useState([]);
+
+  // keyboard state
   const [searchQuery, setSearchQuery] = useState("");
   const [keyboardVisible, setKeyboardVisible] = useState(false);
 
   const searchRef = useRef(null);
   const keyboardRef = useRef(null);
 
-  // Load favorites from localStorage
+  // ================================
+  // LOAD FAVORITES
+  // ================================
   useEffect(() => {
     const savedFavorites = localStorage.getItem("weatherFavorites");
     if (savedFavorites) {
@@ -27,32 +31,33 @@ const HomePage = () => {
         setFavorites(parsed);
         updateFavoritesWeather(parsed);
       } catch (err) {
-        console.error("Error loading favorites:", err);
+        console.error(err);
       }
     }
   }, []);
 
   useEffect(() => {
-    if (favorites.length > 0) {
-      localStorage.setItem("weatherFavorites", JSON.stringify(favorites));
-    }
+    localStorage.setItem("weatherFavorites", JSON.stringify(favorites));
   }, [favorites]);
 
   const updateFavoritesWeather = async (favoritesList) => {
-    const updatedFavorites = await Promise.all(
-      favoritesList.map(async (favorite) => {
+    const updated = await Promise.all(
+      favoritesList.map(async (fav) => {
         try {
-          const data = await fetchWeatherData(favorite.city);
-          return { ...favorite, ...data, lastUpdated: new Date().toISOString() };
-        } catch (err) {
-          console.error(`Error updating weather for ${favorite.city}:`, err);
-          return favorite;
+          const data = await fetchWeatherData(fav.city);
+          return { ...fav, ...data, lastUpdated: new Date().toISOString() };
+        } catch {
+          return fav;
         }
       })
     );
-    setFavorites(updatedFavorites);
+
+    setFavorites(updated);
   };
 
+  // ================================
+  // SEARCH
+  // ================================
   const handleSearch = async (cityName) => {
     setLoading(true);
     setError(null);
@@ -61,23 +66,26 @@ const HomePage = () => {
       const data = await fetchWeatherData(cityName);
       setWeatherData(data);
 
-      const cityExists = favorites.some(
-        (fav) => fav.city.toLowerCase() === cityName.toLowerCase()
+      const exists = favorites.some(
+        (f) => f.city.toLowerCase() === cityName.toLowerCase()
       );
 
-      if (!cityExists) {
-        setFavorites((prev) => [...prev, { ...data, lastUpdated: new Date().toISOString() }]);
+      if (!exists) {
+        setFavorites((prev) => [
+          ...prev,
+          { ...data, lastUpdated: new Date().toISOString() },
+        ]);
       } else {
         setFavorites((prev) =>
-          prev.map((fav) =>
-            fav.city.toLowerCase() === cityName.toLowerCase()
+          prev.map((f) =>
+            f.city.toLowerCase() === cityName.toLowerCase()
               ? { ...data, lastUpdated: new Date().toISOString() }
-              : fav
+              : f
           )
         );
       }
     } catch (err) {
-      setError(err.message || "An error occurred while fetching weather data.");
+      setError(err.message);
       setWeatherData(null);
     } finally {
       setLoading(false);
@@ -85,70 +93,58 @@ const HomePage = () => {
     }
   };
 
+  // ================================
+  // LOCATION
+  // ================================
   const handleLocationFound = async (lat, lon) => {
     setLoading(true);
     setError(null);
 
     try {
       const weather = await fetchWeatherData(lat, lon);
-      if (weather) {
-        const locationData = {
-          city: weather.city || "Your Location",
-          country: weather.country,
-          temperature: weather.temperature,
-          main: weather.main,
-          description: weather.description,
-          icon: weather.icon,
-          humidity: weather.humidity,
-          windSpeed: weather.windSpeed,
-          uvIndex: weather.uvIndex,
-          isDemoData: weather.isDemoData || false,
-          lastUpdated: new Date().toISOString(),
-        };
+      if (!weather) return;
 
-        setWeatherData(locationData);
+      const locationData = {
+        ...weather,
+        city: weather.city || "Your Location",
+        lastUpdated: new Date().toISOString(),
+      };
 
-        const cityExists = favorites.some(
-          (fav) => fav.city.toLowerCase() === locationData.city.toLowerCase()
-        );
+      setWeatherData(locationData);
 
-        if (!cityExists) {
-          setFavorites((prev) => [...prev, locationData]);
-        } else {
-          setFavorites((prev) =>
-            prev.map((fav) =>
-              fav.city.toLowerCase() === locationData.city.toLowerCase()
-                ? locationData
-                : fav
-            )
-          );
-        }
-      }
-    } catch (err) {
-      setError("Could not retrieve weather data for your location");
+      const exists = favorites.some(
+        (f) => f.city.toLowerCase() === locationData.city.toLowerCase()
+      );
+
+      if (!exists) setFavorites((prev) => [...prev, locationData]);
+    } catch {
+      setError("Could not retrieve weather data");
     } finally {
       setLoading(false);
     }
   };
 
+  // ================================
+  // FAVORITES
+  // ================================
   const handleFavoriteClick = (favorite) => {
     setWeatherData(favorite);
   };
 
   const handleRemoveFavorite = (cityName) => {
     setFavorites((prev) =>
-      prev.filter((fav) => fav.city.toLowerCase() !== cityName.toLowerCase())
+      prev.filter((f) => f.city.toLowerCase() !== cityName.toLowerCase())
     );
-    if (weatherData && weatherData.city.toLowerCase() === cityName.toLowerCase()) {
-      setWeatherData(null);
-    }
   };
 
+  // ================================
+  // KEYBOARD INPUT
+  // ================================
   const handleKeyPress = (key) => {
-    if (key === "SPACE") {
-      setSearchQuery((prev) => prev + " ");
-    } else if (key === "⌫") {
+    if (key === "⌫") {
       setSearchQuery((prev) => prev.slice(0, -1));
+    } else if (key === "SPACE") {
+      setSearchQuery((prev) => prev + " ");
     } else if (key === "SEARCH") {
       if (searchQuery.trim()) {
         handleSearch(searchQuery.trim());
@@ -159,7 +155,7 @@ const HomePage = () => {
     }
   };
 
-  // Stänger keyboard om man klickar utanför
+  // close keyboard outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
@@ -171,32 +167,42 @@ const HomePage = () => {
         setKeyboardVisible(false);
       }
     };
+
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // ================================
+  // UI
+  // ================================
   return (
     <div className="home-page-container">
       <WeatherDisplay weatherData={weatherData} loading={loading} error={error} />
+
       <Sidebar
         favorites={favorites}
         onFavoriteClick={handleFavoriteClick}
         onRemoveFavorite={handleRemoveFavorite}
         currentCity={weatherData?.city}
       />
+
       <div className="search-section" ref={searchRef}>
         <SearchBar
-          onSearch={handleSearch}
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
+          onSearch={handleSearch}
           onFocus={() => setKeyboardVisible(true)}
         />
         <CurrentLocationButton onLocationFound={handleLocationFound} />
       </div>
 
-      <div className={`keyboard-container ${keyboardVisible ? "active" : ""}`} ref={keyboardRef}>
-        <Keyboard onKeyPress={handleKeyPress} />
-      </div>
+      <div
+      className={`keyboard-container ${keyboardVisible ? "active" : ""}`}
+      ref={keyboardRef}
+>
+      <Keyboard onKeyPress={handleKeyPress} />
+    </div>
     </div>
   );
 };
