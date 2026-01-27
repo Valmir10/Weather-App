@@ -49,7 +49,7 @@ const HomePage = () => {
         } catch {
           return fav;
         }
-      })
+      }),
     );
 
     setFavorites(updated);
@@ -67,7 +67,7 @@ const HomePage = () => {
       setWeatherData(data);
 
       const exists = favorites.some(
-        (f) => f.city.toLowerCase() === cityName.toLowerCase()
+        (f) => f.city.toLowerCase() === cityName.toLowerCase(),
       );
 
       if (!exists) {
@@ -80,8 +80,8 @@ const HomePage = () => {
           prev.map((f) =>
             f.city.toLowerCase() === cityName.toLowerCase()
               ? { ...data, lastUpdated: new Date().toISOString() }
-              : f
-          )
+              : f,
+          ),
         );
       }
     } catch (err) {
@@ -113,7 +113,7 @@ const HomePage = () => {
       setWeatherData(locationData);
 
       const exists = favorites.some(
-        (f) => f.city.toLowerCase() === locationData.city.toLowerCase()
+        (f) => f.city.toLowerCase() === locationData.city.toLowerCase(),
       );
 
       if (!exists) setFavorites((prev) => [...prev, locationData]);
@@ -132,9 +132,20 @@ const HomePage = () => {
   };
 
   const handleRemoveFavorite = (cityName) => {
-    setFavorites((prev) =>
-      prev.filter((f) => f.city.toLowerCase() !== cityName.toLowerCase())
-    );
+    setFavorites((prev) => {
+      const updated = prev.filter(
+        (f) => f.city.toLowerCase() !== cityName.toLowerCase(),
+      );
+
+      if (weatherData?.city.toLowerCase() === cityName.toLowerCase()) {
+        if (updated.length > 0) {
+          setWeatherData(updated[0]);
+        } else {
+          setWeatherData(null);
+        }
+      }
+      return updated;
+    });
   };
 
   // ================================
@@ -169,8 +180,7 @@ const HomePage = () => {
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () =>
-      document.removeEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   // ================================
@@ -178,7 +188,11 @@ const HomePage = () => {
   // ================================
   return (
     <div className="home-page-container">
-      <WeatherDisplay weatherData={weatherData} loading={loading} error={error} />
+      <WeatherDisplay
+        weatherData={weatherData}
+        loading={loading}
+        error={error}
+      />
 
       <Sidebar
         favorites={favorites}
@@ -198,11 +212,11 @@ const HomePage = () => {
       </div>
 
       <div
-      className={`keyboard-container ${keyboardVisible ? "active" : ""}`}
-      ref={keyboardRef}
->
-      <Keyboard onKeyPress={handleKeyPress} />
-    </div>
+        className={`keyboard-container ${keyboardVisible ? "active" : ""}`}
+        ref={keyboardRef}
+      >
+        <Keyboard onKeyPress={handleKeyPress} />
+      </div>
     </div>
   );
 };
