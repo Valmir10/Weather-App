@@ -8,7 +8,7 @@ import { BsCloudRain, BsSnow } from "react-icons/bs";
 const WeatherDisplay = ({ weatherData, loading, error }) => {
   const getWeatherIcon = (main, icon) => {
     const iconClass = "weather-icon-img";
-    
+
     switch (main) {
       case "Clear":
         return <IoIosSunny className={iconClass} />;
