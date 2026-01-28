@@ -44,12 +44,11 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           npm install -g vercel
+          # Vi anger ID-n här i 'pull' för att skapa rätt miljö
           vercel pull --yes --environment=production \
-            --token=${{ secrets.VERCEL_TOKEN }}
-          vercel build --prod \
-            --token=${{ secrets.VERCEL_TOKEN }}
-          vercel deploy --prebuilt --prod \
             --token=${{ secrets.VERCEL_TOKEN }} \
-            --confirm \
             --org-id=${{ secrets.VERCEL_ORG_ID }} \
             --project-id=${{ secrets.VERCEL_PROJECT_ID }}
+
+          vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+          vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
