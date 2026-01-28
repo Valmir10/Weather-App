@@ -1,27 +1,35 @@
 # Weather App
 
-En väderapplikation byggd med React och Vite och som använder Vercel för att deploya projectet. Den visar väderdata för olika städer.
+En modern väderapplikation byggd med React och Vite som visar realtidsväderdata för städer över hela världen. Applikationen använder OpenWeatherMap API.
 
 ## Funktioner
 
-- Sök efter väderdata för olika städer
+- Sök efter väderdata för städer världen över
 - Visa temperatur, luftfuktighet, vindhastighet och UV-index
-- Hämta väder för din aktuella position
-- Spara favoritstäder
-- Modern och responsiv design
-- Integrerad med OpenWeatherMap API
+- Hämta väder för din aktuella position via geolocation
+- Spara favoritstäder för snabb åtkomst
+- Modern glassmorphism-design med frostad glass-effekt
+- Fully responsive design för desktop, tablet och mobil
+- Custom on-screen keyboard för mobila enheter
+- Demo-läge som automatiskt aktiveras om API-nyckel saknas
 
 ## Installation
 
-1. Installera dependencies för både frontend och backend:
-
+1. Klona projektet:
 ```bash
-# Frontend
+git clone <repository-url>
+cd Weather-App
+```
+
+2. Installera dependencies för frontend:
+```bash
 cd frontend
 npm install
+```
 
-# Backend
-cd ../backend
+3. Installera dependencies för backend:
+```bash
+cd backend
 npm install
 ```
 
@@ -31,66 +39,95 @@ npm install
 
 För att använda riktig väderdata behöver du en API-nyckel från OpenWeatherMap:
 
-1. Skapa en fil som heter .env i backend/-mappen med detta innehåll: WEATHER_API_KEY=6802549fb7737b629d4647b7afd9ac03
+1. Skapa en fil som heter .env i backend/-mappen med detta innehåll:
+```
+WEATHER_API_KEY=6802549fb7737b629d4647b7afd9ac03
 PORT=4000
-2.
-   ```
-**Obs:** 
-- API-nyckeln hanteras säkert i backend och exponeras aldrig till frontend
-- Om ingen API-nyckel anges kommer appen att använda demo-data automatiskt
-- Projektet fungerar direkt när någon klonar det, även utan API-nyckel (med demo-data)
+```
+
+**Observera:** Om ingen API-nyckel anges kommer appen automatiskt att använda demo-data.
 
 ## Starta applikationen
 
-### Backend
+1. Starta backend:
 ```bash
 cd backend
 npm start
 ```
-Backend körs på port 4000.
+Backend körs på http://localhost:4000
 
-### Frontend
+2. Starta frontend:
 ```bash
 cd frontend
 npm run dev
 ```
-Frontend körs på port 5173.
+Frontend körs på http://localhost:5173
 
-Öppna [http://localhost:5173](http://localhost:5173) i din webbläsare.
+3. Öppna http://localhost:5173 i din webbläsare
 
 ## Projektstruktur
 
 ```
-Weather-App-main/
+Weather-App/
+├── .github/
+│   └── workflows/
+│       └── ci.yml                      # GitHub Actions CI workflow
 ├── backend/
-│   └── src/
-│       └── server.js
+│   ├── src/
+│   │   └── server.js                   # Express server och API routes
+│   ├── package.json
+│   └── .env                            # Environment variables (ej i Git)
 ├── frontend/
-│   └── src/
-│       ├── components/
-│       │   ├── Header.jsx
-│       │   ├── SearchBar.jsx
-│       │   ├── Sidebar.jsx
-│       │   └── WeatherDisplay.jsx
-│       ├── pages/
-│       │   └── HomePage.jsx
-│       ├── services/
-│       │   └── weatherApi.js
-│       └── styles/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── CurrentLocationButton.jsx
+│   │   │   ├── Header.jsx
+│   │   │   ├── Keyboard.jsx
+│   │   │   ├── SearchBar.jsx
+│   │   │   ├── Sidebar.jsx
+│   │   │   └── WeatherDisplay.jsx
+│   │   ├── pages/
+│   │   │   └── HomePage.jsx
+│   │   ├── services/
+│   │   │   └── weatherApi.js
+│   │   ├── styles/
+│   │   │   ├── CurrentLocationButton.css
+│   │   │   ├── Header.css
+│   │   │   ├── HomePage.css
+│   │   │   ├── Keyboard.css
+│   │   │   ├── SearchBar.css
+│   │   │   ├── Sidebar.css
+│   │   │   ├── WeatherDisplay.css
+│   │   │   └── WeatherDisplayResponsive.css
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   ├── package.json
+│   └── vite.config.js
+├── vercel.json                          # Vercel deployment konfiguration
 └── README.md
 ```
 
 ## Användning
 
-1. Använd sökfältet på högersidan för att söka efter en stad
-2. Väderdata kommer att visas automatiskt när sökningen är klar
-3. Appen visar temperatur, väderbeskrivning, luftfuktighet, vindhastighet och UV-index
+- Använd sökfältet för att söka efter en stad
+- Klicka på "My Position" för att använda din aktuella position
+- Favoriter sparas automatiskt och visas i sidebaren
+- Klicka på en favorit för att visa dess väderdata
 
 ## Teknologier
 
+### Frontend
 - React 19
-- Vite
-- Express (Backend)
-- OpenWeatherMap API
+- Vite 5
 - React Icons
+- CSS3
 
+### Backend
+- Node.js 20
+- Express
+- CORS
+- dotenv
+
+### APIs
+- OpenWeatherMap API
+- Geolocation API
