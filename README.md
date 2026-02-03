@@ -17,7 +17,7 @@ En modern väderapplikation byggd med React och Vite som visar realtidsväderdat
 
 1. Klona projektet:
 ```bash
-git clone <repository-url>
+git clone <https://github.com/Valmir10/Weather-App.git>
 cd Weather-App
 ```
 
